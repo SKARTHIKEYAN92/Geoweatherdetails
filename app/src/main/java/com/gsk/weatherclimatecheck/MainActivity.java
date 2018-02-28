@@ -1,5 +1,4 @@
 package com.gsk.weatherclimatecheck;
-
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -10,11 +9,9 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -38,9 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
         t1=(TextView)findViewById(R.id.textView);
         t1.setVisibility(View.INVISIBLE);
-
-        // c1=(CheckBox)findViewById (R.id.checkBox1);
-        //  c2=(CheckBox)findViewById (R.id.checkBox2);
         relativeLayout=(RelativeLayout)findViewById(R.id.activity_main);
         city = (EditText) findViewById (R.id.editText1);
         zipcode = (EditText) findViewById (R.id.editText2);
@@ -92,8 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 return builder.toString ().trim ();
             } catch (Exception e) {
                 e.printStackTrace ();
-                // Toast.makeText(getApplicationContext(), "doInBackground is Runned Successfully",Toast.LENGTH_LONG).show();
-
+             
             }
             return null;
         }
@@ -105,9 +98,8 @@ public class MainActivity extends AppCompatActivity {
             mainActivity.dialog = new ProgressDialog (mainActivity);
             mainActivity.dialog.setTitle (" Please Wait Your ");
             mainActivity.dialog.setMessage (mainActivity.city.getText ().toString () + " City Climate is Loading");
-            //mainActivity.dialog.setMessage( mainActivity.e2.getText ().toString ()+ " Climate is Loading");
             mainActivity.dialog.show ();
-            //Toast.makeText(getApplicationContext(), "OnPreExecut is running Successfully",Toast.LENGTH_LONG).show();
+           
         }
         @Override
         protected void onPostExecute(String s) {
@@ -119,9 +111,6 @@ public class MainActivity extends AppCompatActivity {
                 String result = "";
                 JSONObject server_data = new JSONObject (s);
                 String data = server_data.getString ("weather");
-                //Log.v ("tag",JSONObject server_data("5"));
-                // Toast.makeText("String data", server_data,Toast.LENGTH_LONG).show();
-                // Log.d("TAG",server_data));
                 Log.v("TAG",String.valueOf (server_data));
                 JSONArray array = new JSONArray (data);
                 JSONObject weather_data = array.getJSONObject (0);
@@ -161,21 +150,16 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace ();
             }
             mainActivity.t1.setVisibility (View.VISIBLE);
-            //Toast.makeText(getApplicationContext(), "OnPost Method is Performed",Toast.LENGTH_LONG).show();
         }
     }
     public  void Check_Climate(View view) throws ExecutionException, InterruptedException
     {
         getResultTask task = new getResultTask (this);
-//        task.execute ("http://api.openweathermap.org/data/2.5/weather?q=" + e1.getText ().toString () + "&appid=00ae1968c9fe0bc196247d280ae0eb11");
         String url = getURL ();
         task.execute(url);
     }
 
-    /**
-     * Getting Zip or City from UI
-     * @return zip or City String
-     */
+   
     private String getURL(){
         String url = "";
         String str1 = "http://api.openweathermap.org/data/2.5/weather?q=";
